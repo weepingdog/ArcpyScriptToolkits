@@ -29,7 +29,7 @@ fc = 'LCA'
 GDBs=os.listdir(indir)
 
 for thegdb in GDBs:
-    fc_del = indir + os.sep + thegdb + os.sep+ ds + os.sep + fc 
+    fc_del = indir + os.sep + thegdb + os.sep + ds + os.sep + fc 
     print 'deleting ' + fc_del
     arcpy.Delete_management(fc_del) 
 print 'done'
