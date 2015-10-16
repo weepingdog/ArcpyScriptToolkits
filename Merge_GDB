@@ -1,0 +1,35 @@
+import arcpy,os  
+def MergeFileGDB(inPath, outPath, outName):  
+    arcpy.env.workspace = inPath  
+    mergeFilePath = outPath + os.sep + outName  
+    print mergeFilePath  
+  
+    #获得所有的FileGDB  
+    workspaces = arcpy.ListWorkspaces("*", "FileGDB")  
+  
+    for workspace in workspaces:  
+        print(workspace)  
+        arcpy.env.workspace = workspace  
+        mergeFileExist = os.path.exists(mergeFilePath)  
+        if mergeFileExist:  
+            featureclasses = arcpy.ListFeatureClasses()  
+            for fc in featureclasses:  
+                print(fc)  
+                if fc == "LCA":  
+                   arcpy.Append_management(fc, os.path.join(outPath + os.sep + outName, os.path.splitext(fc)[0]),"TEST","","")  
+                   #arcpy.Merge_management(fc, os.path.join(outPath + os.sep + outName , os.path.splitext(fc)[0]))  
+                   break  
+                else: 
+                   continue  
+  
+        else:  
+            arcpy.CreateFileGDB_management(outPath, outName)  
+            featureclasses = arcpy.ListFeatureClasses()  
+            for fc in featureclasses:  
+                arcpy.FeatureClassToFeatureClass_conversion(fc, outPath + os.sep + outName, os.path.splitext(fc)[0])  
+  
+                  
+in_file = r"D:\inputdir"    
+out_location = r"D:"  
+out_name = "GHMerge.gdb"  
+MergeFileGDB(in_file, out_location,out_name)
