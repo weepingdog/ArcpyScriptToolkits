@@ -1,3 +1,6 @@
+#coding=utf-8
+# -*- coding: UTF-8 -*-
+
 import arcpy,os  
 def MergeFileGDB(inPath, outPath, outName):  
     arcpy.env.workspace = inPath  
