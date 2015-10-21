@@ -21,7 +21,6 @@ def delete_file_folder(src):
         except: 
             pass 
 
-
 #1.--输入GDBs所在的路径
 in_path = 'E:/ZHX/ZHXIN'
 
@@ -66,16 +65,13 @@ for fc in fcs:
             #fc计数
             fc_count = int(arcpy.GetCount_management(fc_from).getOutput(0))
             fc_cnt1 = fc_cnt1 + fc_count
-            fc_count_str = str(fc_count)
-            print fc_from + ': ' + fc_count_str
+            print fc_from + ': ' + str(fc_count)
         else:
             print fc_from + ' is missing'
     #输入fc总数
-    fc_cnt1_str = str(fc_cnt1)
-    print fc_cnt1_str + ' fcs input'
+    print str(fc_cnt1) + ' fcs input'
     #输入fc合并到输出fc
     arcpy.Merge_management(fclist,fc_out)
     #输出fc计数
     fc_cnt2 = int(arcpy.GetCount_management(fc_out).getOutput(0))
-    fc_cnt2_str = str(fc_cnt2)
-    print fc_cnt2_str + ' fcs output'
+    print str(fc_cnt2) + ' fcs output'
