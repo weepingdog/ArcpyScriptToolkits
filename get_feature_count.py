@@ -7,29 +7,38 @@ import os
 import arcpy
 from arcpy import env
 
-indir = 'D:\py\inpath'
+indir = r"D:\py\inpath"
+outdir = r"D:\py\inpath"
+outfile = r"o.txt"
+f = open(outdir + os.sep +outfile, "w")
 
-outfile = 'D:\py\inpath\o.txt'
-f = open(outfile,'w')
-GDBs=os.listdir(indir)
+env.workspace = indir
+gdblist = arcpy.ListWorkspaces("*", "FileGDB")
 
-for thegdb in GDBs:
-    ws_gdb = indir + os.sep +thegdb
-    env.workspace = ws_gdb
+for gdb in gdblist:
+    print gdb
+    f.write(gdb + "\r\n")
+    
+    gdbname = os.path.split(gdb)[1][:-4]
+    f_gdb = open(outdir + os.sep + gdbname + ".txt", "w")
+    
+    env.workspace = gdb
     fcs_in_gdb = arcpy.ListFeatureClasses()
     for fc in fcs_in_gdb:
-        fc_dir = env.workspace + os.sep + fc
-        fc_count = arcpy.GetCount_management(fc_dir)
-        print fc_dir,fc_count
-        f.write(fc_dir+'\t'+str(fc_count))
+        fc_count = arcpy.GetCount_management(env.workspace + os.sep + fc)
+        print fc, "\t", fc_count
+        f.write(fc + "\t" + str(fc_count) + "\r\n")
+        f_gdb.write(fc + "\t" + str(fc_count) + "\r\n")
     dss_in_gdb = arcpy.ListDatasets()
     for ds in dss_in_gdb:
-        ws_ds = ws_gdb + os.sep +ds
-        env.workspace = ws_ds
+        env.workspace = gdb + os.sep + ds
         fcs_in_ds = arcpy.ListFeatureClasses()
         for fc in fcs_in_ds:
-            fc_dir = env.workspace + os.sep+ fc
-            fc_count = arcpy.GetCount_management(fc_dir)
-            print fc_dir, fc_count
-            f.write(fc_dir+'\t'+str(fc_count))
+            fc_count = arcpy.GetCount_management(env.workspace + os.sep + fc)
+            print ds, fc, fc_count
+            f.write(ds + "\t" + fc + "\t" + str(fc_count) +"\r\n")
+            f_gdb.write(ds + "\t" + fc + "\t" + str(fc_count) +"\r\n")
+    print "==================="
+    f.write("===================\r\n")
+    f_gdb.close()
 f.close()
