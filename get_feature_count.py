@@ -7,8 +7,8 @@ import os
 import arcpy
 from arcpy import env
 
-indir = r"D:\py\inpath"
-outdir = r"D:\py\inpath"
+indir = r"E:\ZHX\ZHXIN"
+outdir = r"E:\ZHX\ZHXOUT"
 outfile = r"o.txt"
 f = open(outdir + os.sep +outfile, "w")
 
