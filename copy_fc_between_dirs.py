@@ -29,11 +29,13 @@ fc = 'LCA'
 
 # Get the list of GDBs
 # 获得文件地理数据列表
-GDBs=os.listdir(dir_src)
+env.workspace = dir_src
 
-for thegdb in GDBs:
-    fc_src = dir_src + os.sep + thegdb + os.sep + ds + os.sep + fc
-    fc_tar = dir_tar + os.sep + thegdb + os.sep + ds + os.sep + fc
-    print 'Copying ' + thegdb + os.sep + fc+ ' from ' + dir_src + ' to ' + dir_tar
+gdblist = arcpy.ListWorkspaces("*","FileGDB")
+
+for gdb in gdblist:
+    fc_src = dir_src + os.sep + gdb + os.sep + ds + os.sep + fc
+    fc_tar = dir_tar + os.sep + gdb + os.sep + ds + os.sep + fc
+    print 'Copying ' + gdb + os.sep + fc+ ' from ' + dir_src + ' to ' + dir_tar
     arcpy.Copy_management(fc_src,fc_tar)
 print 'done'
