@@ -11,31 +11,21 @@
 import os
 import arcpy
 
-# Set source direction
-# 设置文件地理数据库所在的源路径
-dir_src = 'D:\py\inpath'
+def Do(dir_src,dir_tar,ds,fc):
+	pass
+    # Get the list of GDBs
+    # 获得文件地理数据列表
+    env.workspace = dir_src
 
-# Set target direction
-# 设置文件地理数据库所在的目标路径
-dir_tar = 'D:\py\outpath'
+    gdblist = arcpy.ListWorkspaces("*","FileGDB")
 
-# Set Data Set
-# 设置数据集名称
-ds = 'AD'
-
-# Set Feature Class
-# 设置要素类名称
-fc = 'LCA'
-
-# Get the list of GDBs
-# 获得文件地理数据列表
-env.workspace = dir_src
-
-gdblist = arcpy.ListWorkspaces("*","FileGDB")
-
-for gdb in gdblist:
-    fc_src = dir_src + os.sep + gdb + os.sep + ds + os.sep + fc
-    fc_tar = dir_tar + os.sep + gdb + os.sep + ds + os.sep + fc
-    print 'Copying ' + gdb + os.sep + fc+ ' from ' + dir_src + ' to ' + dir_tar
-    arcpy.Copy_management(fc_src,fc_tar)
-print 'done'
+    for gdb in gdblist:
+        fc_src = dir_src + os.sep + gdb + os.sep + ds + os.sep + fc
+        fc_tar = dir_tar + os.sep + gdb + os.sep + ds + os.sep + fc
+        print 'Copying ' + gdb + os.sep + fc+ ' from ' + dir_src + ' to ' + dir_tar
+        arcpy.Copy_management(fc_src,fc_tar)
+    print 'done'
+if __name__=="__main__":
+    print time.strftime("start:%Y/%m/%d:%H:%M:%S")
+    Do(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
+    print time.strftime("done:%Y/%m/%d:%H:%M:%S")
