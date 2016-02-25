@@ -9,7 +9,13 @@
 # Author:Zhang Huaixiang
 
 import os
+import sys
+import time
+
 import arcpy
+from arcpy import env
+
+import deletefcingdbs
 
 # Set input direction
 # 设置文件地理数据库所在的路径
@@ -22,14 +28,7 @@ ds = 'AD'
 # Set Feature Class
 # 设置要素类名称
 fc = 'LCA'
-
-
-# Get the list of GDBs
-# 获得文件地理数据列表
-GDBs=os.listdir(indir)
-
-for thegdb in GDBs:
-    fc_del = indir + os.sep + thegdb + os.sep + ds + os.sep + fc 
-    print 'deleting ' + fc_del
-    arcpy.Delete_management(fc_del) 
-print 'done'
+if __name__=="__main__":
+    print time.strftime("start:%Y/%m/%d:%H:%M:%S")
+    deletefcingdbs.Do(indir,ds,fc)
+    print time.strftime("done:%Y/%m/%d:%H:%M:%S")

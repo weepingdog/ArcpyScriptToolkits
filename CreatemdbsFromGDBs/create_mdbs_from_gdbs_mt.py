@@ -5,24 +5,16 @@ import os
 import arcpy
 from arcpy import env
 
-#输入参数
-#1---GDBs所在的路径
-gdb_dir_in = u'E:/ZHX/ZHXIN'
+def Do(gdb_dir_in,mdb_dir_out)
+    #获得GDB列表
+    env.workspace = gdb_dir_in
+    GDBlist = arcpy.ListWorkspaces("*","FileGDB")
 
-#输出参数
-#2---输出MDB所在的路径
-mdb_dir_out = u'E:/ZHX/ZHXOUT'
-
-#获得GDB列表
-env.workspace = gdb_dir_in
-GDBlist = arcpy.ListWorkspaces()
-
-gdb_index = 1
-mdblist = []
-for gdb in GDBlist:
-    if gdb[-4:] in [".gdb"]:
+    gdb_index = 1
+    mdblist = []
+    for gdb in GDBlist:
         gdbname = os.path.split(gdb)[1]
-        mdbname = gdbname[:-4] + '.mdb'
+        mdbname =os.path.splitext(gdbname)[0] + '.mdb'
         mdb = mdb_dir_out + os.sep +mdbname
         if arcpy.Exists(mdb):
             os.remove(mdb)
@@ -31,7 +23,8 @@ for gdb in GDBlist:
         fcs_in_gdb = arcpy.ListFeatureClasses()
         arcpy.FeatureClassToGeodatabase_conversion(fcs_in_gdb,mdb)
         print str(gdb_index) + '\t' + gdb + ' translate to mdb done!'
-    else:
-        print str(gdb_index) + '\t' + gdb + ' is not a gdb file'
-        continue
-    gdb_index = gdb_index + 1
+        gdb_index = gdb_index + 1
+if __name__=="__main__":
+    print time.strftime("start:%Y/%m/%d:%H:%M:%S")
+    Do(sys.argv[1],sys.argv[2]])
+    print time.strftime("done:%Y/%m/%d:%H:%M:%S")
