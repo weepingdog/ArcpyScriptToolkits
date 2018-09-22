@@ -13,8 +13,8 @@ def fourptrans(x0in,y0in,dxin,dyin,rotin,kin):
     y=dyin+kin*x0in*sinr+kin*y0in*cosr
     return(x,y)
 
-f1=open("bz.txt","r")
-f2=open("bz2000out.txt","w")
+f1=open("in.txt","r")
+f2=open("out.txt","w")
 bz=[]
 rdl=f1.readline()
 index=1
