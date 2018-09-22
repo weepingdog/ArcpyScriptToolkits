@@ -15,9 +15,9 @@ if __name__ == "__main__":
     dy = 178.190
     rot_s = -10.300182
     k = 1.00009495477874
+    
     f1 = open("in.txt","r")
-    f2 = open("out.txt","w")
-    bz = []
+    f2 = open("out.txt","w")    
     rdl = f1.readline()
     index = 1
     while(rdl):
